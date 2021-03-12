@@ -2,6 +2,7 @@ import "./Config/Database.js";
 
 import express from "express";
 import logger from "morgan";
+import path from "path";
 
 import product_routes from "./app/Routes/Product.js";
 import rates_routes from "./app/Routes/Rate.js";
@@ -20,9 +21,9 @@ app.use(
     logger(":method :url :status :res[content-length] - :response-time ms")
 );
 
-app.get("/", (req, res) => {
-    res.send("Welcome to customify backend");
-});
+app.get("/", (req, res) =>
+    res.sendFile(path.join(path.resolve(), "public/welcome.html"))
+);
 
 app.use("/api/brands", brand_routes);
 app.use("/api/rates", rates_routes);
