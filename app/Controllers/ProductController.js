@@ -67,7 +67,7 @@ class ProductController extends Controller {
                 "name",
                 "description",
                 "brand",
-                "category",
+                "categories",
                 "rates",
                 "colors",
                 "about_the_product",
@@ -78,7 +78,9 @@ class ProductController extends Controller {
                 "details",
             ]);
             user.brand = await Brand.findById(user.brand);
-            user.category = await ProductCategory.findById(user.category);
+            user.categories = await ProductCategory.find({
+                _id: { $in: user.categories },
+            });
             user.good_for = await ConsumerCategory.find()
                 .where("_id")
                 .in(user.good_for);

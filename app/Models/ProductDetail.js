@@ -5,6 +5,7 @@ const productDetailSchema = new mongoose.Schema({
     name: {
         type: String,
         minlength: 4,
+        unique: true,
         required: true,
     },
     description: {

@@ -10,16 +10,19 @@ const productSchema = new mongoose.Schema({
     },
     name: { type: String, minlength: 4, required: true },
     description: { type: String, minlength: 10, required: true },
+    price: { type: Number, required: true },
     brand: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Brand",
         required: true,
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "ProductCategory",
-        required: true,
-    },
+    categories: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "ProductCategory",
+            required: true,
+        },
+    ],
     good_for: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -57,7 +60,8 @@ export const validate = (data) => {
         name: "required|string|min:4",
         description: "required|string|min:10",
         brand: "required|string|min:24|max:24",
-        category: "required|string|min:24|max:24",
+        categories: "required|array",
+        "categories.*": "required|string|min:24|max:24",
         good_for: "required|array",
         "good_for.*": "required|string|min:24|max:24",
         bad_for: "required|array",
@@ -71,6 +75,7 @@ export const validate = (data) => {
             value: "required",
         },
         images: "required|array|min:3",
+        price: "required|integer",
     };
 
     return new Validator(data, rules);
