@@ -41,10 +41,10 @@ app.use("/api/users", user_routes);
 app.use("/api/auth", auth_routes);
 app.use("/api/files", files_routes);
 
-app.listen(process.env.APP_PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log(
         `[${new Date()}] Development Server  (http://localhost:${
-            process.env.APP_PORT
+            process.env.PORT
         }) started`
     );
 });
