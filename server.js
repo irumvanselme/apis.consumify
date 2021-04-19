@@ -3,6 +3,7 @@ import "./Config/Database.js";
 import express from "express";
 import logger from "morgan";
 import path from "path";
+import cors from "cors";
 
 import product_routes from "./app/Routes/Product.js";
 import rates_routes from "./app/Routes/Rate.js";
@@ -17,6 +18,7 @@ import product_detail_routes from "./app/Routes/ProductDetail.js";
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use(
     logger(":method :url :status :res[content-length] - :response-time ms")
 );

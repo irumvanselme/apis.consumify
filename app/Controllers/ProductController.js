@@ -7,6 +7,7 @@ import { ProductCategory } from "../Models/ProductCategory.js";
 import { ConsumerCategory } from "../Models/ConsumerCategory.js";
 import { ProductDetail } from "../Models/ProductDetail.js";
 import { Review } from "../Models/Review.js";
+import { Rate } from "../Models/Rate.js";
 
 class ProductController extends Controller {
     async get_all(req, res) {
@@ -62,7 +63,7 @@ class ProductController extends Controller {
             const product = await Product.findById(req.params.id);
             if (!product)
                 return res.status(404).send({ message: "Product not found" });
-            let user = _.pick(product, [
+            let productDetails = _.pick(product, [
                 "_id",
                 "name",
                 "description",
@@ -77,22 +78,28 @@ class ProductController extends Controller {
                 "bad_for",
                 "details",
             ]);
-            user.brand = await Brand.findById(user.brand);
-            user.categories = await ProductCategory.find({
-                _id: { $in: user.categories },
-            });
-            user.good_for = await ConsumerCategory.find()
+            productDetails.brand = await Brand.findById(productDetails.brand);
+            productDetails.categories = await ProductCategory.where("_id").in(
+                productDetails.categories
+            );
+            productDetails.good_for = await ConsumerCategory.find()
                 .where("_id")
-                .in(user.good_for);
-            user.bad_for = await ConsumerCategory.find()
+                .in(productDetails.good_for);
+            productDetails.bad_for = await ConsumerCategory.find()
                 .where("_id")
-                .in(user.bad_for);
-            for (let i = 0; i < user.details.length; i++)
-                user.details[i].detail = await ProductDetail.findById(
-                    user.details[i].detail
+                .in(productDetails.bad_for);
+            productDetails.rates = await Rate.find({
+                product: productDetails._id,
+            }).count();
+            productDetails.reviews = await Review.find({
+                product: productDetails._id,
+            }).count();
+            for (let i = 0; i < productDetails.details.length; i++)
+                productDetails.details[i].detail = await ProductDetail.findById(
+                    productDetails.details[i].detail
                 );
 
-            return res.send(user);
+            return res.send(productDetails);
         } catch (e) {
             return res.status(500).send(e);
         }
