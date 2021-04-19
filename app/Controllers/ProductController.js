@@ -13,6 +13,7 @@ class ProductController extends Controller {
     async get_all(req, res) {
         try {
             const messages = await Product.find();
+            console.log("Running ...");
             return res.send(messages);
         } catch (err) {
             return res.status(500).send(err);

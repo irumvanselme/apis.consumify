@@ -14,10 +14,13 @@ import review_routes from "./app/Routes/Review.js";
 import consumer_category_routes from "./app/Routes/ConsumerCategory.js";
 import product_category_routes from "./app/Routes/ProductCategory.js";
 import product_detail_routes from "./app/Routes/ProductDetail.js";
+import files_routes from "./app/Routes/File.js";
 
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors());
 app.use(
     logger(":method :url :status :res[content-length] - :response-time ms")
@@ -36,6 +39,7 @@ app.use("/api/product/reviews", review_routes);
 app.use("/api/products", product_routes);
 app.use("/api/users", user_routes);
 app.use("/api/auth", auth_routes);
+app.use("/api/files", files_routes);
 
 app.listen(process.env.APP_PORT, () => {
     console.log(

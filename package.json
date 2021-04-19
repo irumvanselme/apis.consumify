@@ -9,6 +9,7 @@
   "type": "module",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "cloudinary": "^1.25.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -16,6 +17,7 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.11.13",
     "morgan": "^1.10.0",
+    "multer": "^1.4.2",
     "validatorjs": "^3.22.1"
   }
 }
