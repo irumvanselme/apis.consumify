@@ -12,6 +12,9 @@ const productCategorySchema = new mongoose.Schema({
         ref: "ProductCategory",
         length: 24,
     },
+    image: {
+        type: String,
+    },
     description: {
         type: String,
         minlength: 10,
@@ -26,6 +29,7 @@ export const ProductCategory = mongoose.model(
 export const validate = (data) => {
     const rules = {
         parent_category: "string|min:24",
+        image: "string",
         name: "string|required|min:4",
         description: "string|min:10",
     };
