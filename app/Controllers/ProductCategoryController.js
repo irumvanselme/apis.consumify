@@ -134,7 +134,7 @@ class ProductCategoryController extends Controller {
                 parent_category: {
                     $ne: null,
                 },
-            });
+            }).limit(8);
             return res.send(categories);
         } catch (error) {
             return res.status(500).send(error);
