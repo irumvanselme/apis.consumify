@@ -32,9 +32,9 @@ app.get("/", (req, res) =>
 
 app.use("/api/brands", brand_routes);
 app.use("/api/rates", rates_routes);
-app.use("/api/consumer_categories", consumer_category_routes);
-app.use("/api/product_categories", product_category_routes);
-app.use("/api/product_details", product_detail_routes);
+app.use("/api/consumer-categories", consumer_category_routes);
+app.use("/api/product-categories", product_category_routes);
+app.use("/api/product-details", product_detail_routes);
 app.use("/api/product/reviews", review_routes);
 app.use("/api/products", product_routes);
 app.use("/api/users", user_routes);

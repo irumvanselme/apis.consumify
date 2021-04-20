@@ -7,6 +7,11 @@ const productCategorySchema = new mongoose.Schema({
         minlength: 4,
         required: true,
     },
+    parent_category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ProductCategory",
+        length: 24,
+    },
     description: {
         type: String,
         minlength: 10,
@@ -20,6 +25,7 @@ export const ProductCategory = mongoose.model(
 
 export const validate = (data) => {
     const rules = {
+        parent_category: "string|min:24",
         name: "string|required|min:4",
         description: "string|min:10",
     };

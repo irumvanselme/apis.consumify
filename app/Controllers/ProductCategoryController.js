@@ -17,10 +17,17 @@ class ProductCategoryController extends Controller {
             const productCategory = await ProductCategory.findById(
                 req.params.id
             );
+
             if (!productCategory)
                 return res
                     .status(404)
                     .send({ message: "ProductCategory not found" });
+
+            if (productCategory.parent_category)
+                productCategory.parent_category = await ProductCategory.findById(
+                    productCategory.parent_category
+                );
+
             return res.send(productCategory);
         } catch (e) {
             return res.status(500).send(e);
@@ -107,6 +114,41 @@ class ProductCategoryController extends Controller {
             return res.send(deletedProductCategory);
         } catch (e) {
             return res.status(500).send(e);
+        }
+    }
+
+    async parents(req, res) {
+        try {
+            let categories = await ProductCategory.find({
+                parent_category: null,
+            });
+            return res.send(categories);
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    }
+
+    async children(req, res) {
+        try {
+            let categories = await ProductCategory.find({
+                parent_category: {
+                    $ne: null,
+                },
+            });
+            return res.send(categories);
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    }
+
+    async category_children(req, res) {
+        try {
+            let categories = await ProductCategory.find({
+                parent_category: req.params.id,
+            });
+            return res.send(categories);
+        } catch (error) {
+            return res.status(500).send(error);
         }
     }
 }
