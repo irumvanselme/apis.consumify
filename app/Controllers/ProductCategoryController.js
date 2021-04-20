@@ -36,7 +36,9 @@ class ProductCategoryController extends Controller {
 
     async products(req, res) {
         try {
-            const products = await Product.find({ category: req.params.id });
+            const products = await Product.find({
+                categories: { $in: req.params.id },
+            });
             return res.send(products);
         } catch (error) {
             return res.status(500).send(error);
